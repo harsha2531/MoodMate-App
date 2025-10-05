@@ -1,4 +1,3 @@
-// app/(dashboard)/NewEntry.tsx
 import React, { useState, useContext } from 'react';
 import { View, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import { TextInput, Button, Snackbar, Title, ActivityIndicator } from 'react-native-paper';
