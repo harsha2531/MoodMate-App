@@ -1,19 +1,15 @@
-import React from "react";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 
-const Loading = () => (
-    <View style={styles.container}>
-        <ActivityIndicator size="large" color="#007AFF" />
-    </View>
-);
+export default function Loading({ size = 'large' as 'small' | 'large' }) {
+    return (
+        <View style={styles.center}>
+            <ActivityIndicator animating={true} size={size === 'small' ? 24 : 48} />
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#fff",
-    },
+    center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 },
 });
-
-export default Loading;
