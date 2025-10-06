@@ -1,4 +1,3 @@
-// contexts/AuthContext.tsx
 import React, { createContext, useEffect, useState, ReactNode } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, type User } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';

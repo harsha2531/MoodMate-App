@@ -27,6 +27,16 @@ export type Entry = {
     createdAt?: any;
 };
 
+export async function getEntriesForUser(userId: string): Promise<Entry[]> {
+    const q = query(collection(db, "entries"), where("userId", "==", userId));
+    const snap = await getDocs(q);
+
+    return snap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    })) as Entry[];
+}
+
 export async function uploadImageToStorage(uri: string, userId: string) {
     try {
         // fetch blob
