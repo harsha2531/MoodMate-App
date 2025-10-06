@@ -18,13 +18,21 @@ const Profile = () => {
             allowsEditing: true,
             quality: 0.8,
         });
-        if (!result.canceled) {
+
+        if (!result.canceled && user) {
             const uri = result.assets[0].uri;
             setLoading(true);
-            const downloadUrl = await uploadImageAsync(uri, user.uid);
-            await updateProfile(auth.currentUser!, { photoURL: downloadUrl });
-            setPhoto(downloadUrl);
-            setLoading(false);
+            try {
+                const downloadUrl = await uploadImageAsync(uri, user.uid);
+                await updateProfile(auth.currentUser!, { photoURL: downloadUrl });
+                setPhoto(downloadUrl);
+            } catch (err) {
+                console.error("Upload failed:", err);
+            } finally {
+                setLoading(false);
+            }
+        } else if (!user) {
+            console.warn("User not found in AuthContext");
         }
     };
 

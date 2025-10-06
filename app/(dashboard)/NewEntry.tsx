@@ -20,8 +20,16 @@ export default function NewEntry() {
             setSnack({ visible: true, message: 'Permission to access photos is required.' });
             return;
         }
-        const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, quality: 0.7, allowsEditing: true });
-        if (!res.cancelled) setImageUri(res.uri);
+
+        const res = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 0.7,
+            allowsEditing: true,
+        });
+
+        if (!res.canceled && res.assets && res.assets.length > 0) {
+            setImageUri(res.assets[0].uri);
+        }
     };
 
     const takePhoto = async () => {
@@ -30,9 +38,17 @@ export default function NewEntry() {
             setSnack({ visible: true, message: 'Camera permission required.' });
             return;
         }
-        const res = await ImagePicker.launchCameraAsync({ quality: 0.7, allowsEditing: true });
-        if (!res.cancelled) setImageUri(res.uri);
+
+        const res = await ImagePicker.launchCameraAsync({
+            quality: 0.7,
+            allowsEditing: true,
+        });
+
+        if (!res.canceled && res.assets && res.assets.length > 0) {
+            setImageUri(res.assets[0].uri);
+        }
     };
+
 
     const save = async () => {
         if (!user) return setSnack({ visible: true, message: 'User not authenticated' });
