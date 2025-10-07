@@ -1,44 +1,37 @@
-import React, { useState, useContext } from "react";
-import { View, StyleSheet } from "react-native";
-import { TextInput, Button, Title } from "react-native-paper";
-import { router } from "expo-router";
-import { AuthContext } from "../contexts/AuthContext";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useState } from "react";
+import { useRouter } from "expo-router";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Register() {
-    const { signUp } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [displayName, setDisplayName] = useState("");
-    const [loading, setLoading] = useState(false);
+    const { register } = useAuth();
+    const router = useRouter();
 
-    const onRegister = async () => {
+    const handleRegister = async () => {
         try {
-            setLoading(true);
-            await signUp(email, password, displayName);
-            router.replace("/(dashboard)");
-        } catch (err: any) {
-            alert(err.message);
-        } finally {
-            setLoading(false);
+            await register(email, password);
+            router.replace("/(protected)/home");
+        } catch (e) {
+            console.error(e);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Title style={{ marginBottom: 20 }}>Create Account</Title>
-            <TextInput label="Full Name" value={displayName} onChangeText={setDisplayName} />
-            <TextInput label="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
-            <TextInput label="Password" value={password} onChangeText={setPassword} secureTextEntry />
-            <Button mode="contained" onPress={onRegister} loading={loading} style={{ marginTop: 16 }}>
-                Register
-            </Button>
-            <Button onPress={() => router.push("/(auth)/login")} style={{ marginTop: 8 }}>
-                Back to Login
-            </Button>
+            <Text style={styles.title}>Register</Text>
+            <TextInput placeholder="Email" style={styles.input} value={email} onChangeText={setEmail} />
+            <TextInput placeholder="Password" secureTextEntry style={styles.input} value={password} onChangeText={setPassword} />
+            <Button title="Register" onPress={handleRegister} />
+            <Text style={styles.link} onPress={() => router.push("/login")}>Back to Login</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16, justifyContent: "center" },
+    container: { flex: 1, justifyContent: "center", padding: 20 },
+    title: { fontSize: 22, marginBottom: 20 },
+    input: { borderWidth: 1, marginBottom: 10, padding: 10, borderRadius: 5 },
+    link: { color: "blue", marginTop: 15, textAlign: "center" },
 });
