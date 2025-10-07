@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { AuthContext } from '../../contexts/AuthContext';
-import { getEntriesForUser } from '../../services/entries';
-import { BarChart } from 'react-native-chart-kit';
-import { computeWeeklyMoodCounts } from '../../utils/stats';
+import React, { useContext, useEffect, useState } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
+import { AuthContext } from "../../contexts/AuthContext";
+import { getEntriesForUser } from "../../services/entries";
+import { BarChart } from "react-native-chart-kit";
+import { computeWeeklyMoodCounts } from "../../utils/stats";
 
 export default function Stats() {
     const { user } = useContext(AuthContext);
@@ -18,29 +18,37 @@ export default function Stats() {
         })();
     }, [user]);
 
-    const screenWidth = Dimensions.get('window').width;
+    const screenWidth = Dimensions.get("window").width;
 
     return (
         <View style={styles.container}>
-            {counts.length > 0 ? (
+            {counts.length > 0 && (
                 <BarChart
-                    data={{ labels: ['😊', '😢', '😡', '😌'], datasets: [{ data: counts }] }}
+                    data={{
+                        labels: ["😊", "😢", "😡", "😌"],
+                        datasets: [{ data: counts }],
+                    }}
                     width={screenWidth - 32}
                     height={220}
                     fromZero
                     chartConfig={{
-                        backgroundGradientFrom: '#fff',
-                        backgroundGradientTo: '#fff',
+                        backgroundGradientFrom: "#fff",
+                        backgroundGradientTo: "#fff",
                         decimalPlaces: 0,
                         color: (opacity = 1) => `rgba(0,0,0,${opacity})`,
                     }}
+                    style={{ borderRadius: 8 }}
                 />
-            ) : null}
+            )}
         </View>
     );
 }
 
-const styles = StyleSheet.create({ container: { flex: 1, padding: 16 } });
+const styles = StyleSheet.create({
+    container: { flex: 1, padding: 16, backgroundColor: "#f9f9f9" },
+});
+
+
 
 // import React, { useContext, useEffect, useState } from 'react';
 // import { View, StyleSheet, Dimensions } from 'react-native';
