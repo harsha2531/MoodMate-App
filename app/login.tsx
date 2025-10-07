@@ -1,37 +1,102 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useState } from "react";
-import { useRouter } from "expo-router";
-import { useAuth } from "../contexts/AuthContext";
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { authService } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 
-export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const { login } = useAuth();
-    const router = useRouter();
+export default function LoginScreen() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const { user } = useAuth();
+
+    React.useEffect(() => {
+        if (user) {
+            router.replace('/(tabs)');
+        }
+    }, [user]);
 
     const handleLogin = async () => {
+        if (!email || !password) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+
+        setLoading(true);
         try {
-            await login(email, password);
-            router.replace("/(protected)/home");
-        } catch (e) {
-            console.error(e);
+            await authService.login(email, password);
+            router.replace('/(tabs)');
+        } catch (error: any) {
+            Alert.alert('Login Failed', error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
-            <TextInput placeholder="Email" style={styles.input} value={email} onChangeText={setEmail} />
-            <TextInput placeholder="Password" secureTextEntry style={styles.input} value={password} onChangeText={setPassword} />
-            <Button title="Login" onPress={handleLogin} />
-            <Text style={styles.link} onPress={() => router.push("/register")}>Go to Register</Text>
-        </View>
+        <LinearGradient colors={['#1A1A1A', '#2A2A2A']} className="flex-1">
+            <ScrollView className="flex-1 px-6">
+                <View className="items-center mt-20 mb-10">
+                    <LinearGradient colors={['#6C8CFF', '#6CFFD2']} className="w-20 h-20 rounded-2xl items-center justify-center">
+                        <Ionicons name="heart" size={40} color="white" />
+                    </LinearGradient>
+                    <Text className="text-white text-3xl font-bold mt-4">MoodMate</Text>
+                    <Text className="text-gray-400 text-lg mt-2">Welcome back!</Text>
+                </View>
+
+                <View className="space-y-4">
+                    <View>
+                        <Text className="text-white text-sm font-semibold mb-2">Email</Text>
+                        <TextInput
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholder="Enter your email"
+                            placeholderTextColor="#666"
+                            className="bg-gray-800 text-white rounded-xl px-4 py-4 border border-gray-700"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                        />
+                    </View>
+
+                    <View>
+                        <Text className="text-white text-sm font-semibold mb-2">Password</Text>
+                        <TextInput
+                            value={password}
+                            onChangeText={setPassword}
+                            placeholder="Enter your password"
+                            placeholderTextColor="#666"
+                            className="bg-gray-800 text-white rounded-xl px-4 py-4 border border-gray-700"
+                            secureTextEntry
+                        />
+                    </View>
+
+                    <TouchableOpacity
+                        onPress={handleLogin}
+                        disabled={loading}
+                        className="mt-6"
+                    >
+                        <LinearGradient
+                            colors={['#6C8CFF', '#6CFFD2']}
+                            className="rounded-xl py-4 items-center"
+                        >
+                            <Text className="text-white text-lg font-semibold">
+                                {loading ? 'Signing In...' : 'Sign In'}
+                            </Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => router.push('/register')}
+                        className="py-4 items-center"
+                    >
+                        <Text className="text-gray-400">
+                            Don't have an account? <Text className="text-[#6C8CFF] font-semibold">Sign Up</Text>
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </LinearGradient>
     );
 }
-
-const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: "center", padding: 20 },
-    title: { fontSize: 22, marginBottom: 20 },
-    input: { borderWidth: 1, marginBottom: 10, padding: 10, borderRadius: 5 },
-    link: { color: "blue", marginTop: 15, textAlign: "center" },
-});
