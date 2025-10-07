@@ -20,7 +20,7 @@ export default function LoginScreen() {
 
     const handleLogin = async () => {
         if (!email || !password) {
-            Alert.alert('Error', 'Please fill in all fields');
+            Alert.alert('Error : ', 'Please fill in all fields');
             return;
         }
 
@@ -29,7 +29,7 @@ export default function LoginScreen() {
             await authService.login(email, password);
             router.replace('/(tabs)' as Href);
         } catch (error: any) {
-            Alert.alert('Login Failed', error.message);
+            Alert.alert('Login Failed,Please check your credentials..!');
         } finally {
             setLoading(false);
         }

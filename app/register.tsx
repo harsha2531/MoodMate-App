@@ -40,7 +40,7 @@ export default function RegisterScreen() {
             await authService.register(form.email, form.password, form.fullName);
             // Navigation will be handled by the auth state change in useEffect
         } catch (error: any) {
-            Alert.alert('Registration Failed', error.message);
+            Alert.alert('Registration Failed,Please try again later...!');
         } finally {
             setLoading(false);
         }
