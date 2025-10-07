@@ -2,7 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const moods = [
+interface Mood {
+    emoji: string;
+    label: string;
+    color: [string, string]; // Explicitly define as tuple
+}
+
+const moods: Mood[] = [
     { emoji: '😊', label: 'Happy', color: ['#FF9D6C', '#FF6B9D'] },
     { emoji: '😢', label: 'Sad', color: ['#6C8CFF', '#6CFFD2'] },
     { emoji: '😡', label: 'Angry', color: ['#FF6C6C', '#FF9D6C'] },
