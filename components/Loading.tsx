@@ -1,15 +1,13 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
-export default function Loading({ size = 'large' as 'small' | 'large' }) {
+export default function Loading() {
     return (
         <View style={styles.center}>
-            <ActivityIndicator animating={true} size={size === 'small' ? 24 : 48} />
+            <ActivityIndicator animating size={48} />
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 },
-});
+const styles = StyleSheet.create({ center: { flex: 1, alignItems: "center", justifyContent: "center" } });
