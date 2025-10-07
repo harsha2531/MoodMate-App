@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import { journalService, JournalEntry } from '../../services/journalService';
 import { MoodSelector } from '../../components/MoodSelector';
 import { JournalCard } from '../../components/JournalCard';
-import { router } from 'expo-router';
+import { router,Href } from 'expo-router';
 
 export default function HomeScreen() {
     const { user, userRole } = useAuth();
@@ -118,7 +118,7 @@ export default function HomeScreen() {
                         <Text className="text-white text-2xl font-bold">Hello, {user?.displayName}!</Text>
                         <Text className="text-gray-400">How are you feeling today?</Text>
                     </View>
-                    <TouchableOpacity onPress={() => router.push('/profile')}>
+                    <TouchableOpacity onPress={() => router.push('/profile' as Href)}>
                         <LinearGradient colors={['#6C8CFF', '#6CFFD2']} className="w-10 h-10 rounded-xl items-center justify-center">
                             <Ionicons name="person" size={20} color="white" />
                         </LinearGradient>

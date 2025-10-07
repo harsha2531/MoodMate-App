@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import {Href, router} from 'expo-router';
 import { authService } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 
@@ -15,10 +15,12 @@ export default function RegisterScreen() {
     });
     const [loading, setLoading] = useState(false);
     const { user } = useAuth();
+    // const router = useRouter();
+
 
     React.useEffect(() => {
         if (user) {
-            router.replace('/(tabs)');
+            router.replace('/(tabs)' as Href);
         }
     }, [user]);
 
@@ -36,7 +38,7 @@ export default function RegisterScreen() {
         setLoading(true);
         try {
             await authService.register(form.email, form.password, form.fullName);
-            router.replace('/(tabs)');
+            // Navigation will be handled by the auth state change in useEffect
         } catch (error: any) {
             Alert.alert('Registration Failed', error.message);
         } finally {
@@ -120,7 +122,7 @@ export default function RegisterScreen() {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => router.push('/login')}
+                        onPress={() => router.back()}
                         className="py-4 items-center"
                     >
                         <Text className="text-gray-400">

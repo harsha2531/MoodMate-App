@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router,Href } from 'expo-router';
 import { authService } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 
@@ -14,7 +14,7 @@ export default function LoginScreen() {
 
     React.useEffect(() => {
         if (user) {
-            router.replace('/(tabs)');
+            router.replace('/(tabs)' as Href);
         }
     }, [user]);
 
@@ -27,7 +27,7 @@ export default function LoginScreen() {
         setLoading(true);
         try {
             await authService.login(email, password);
-            router.replace('/(tabs)');
+            router.replace('/(tabs)' as Href);
         } catch (error: any) {
             Alert.alert('Login Failed', error.message);
         } finally {
