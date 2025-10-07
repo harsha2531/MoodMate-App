@@ -6,10 +6,10 @@ import { useAuth } from '../../context/AuthContext';
 import { journalService, JournalEntry } from '../../services/journalService';
 import { MoodSelector } from '../../components/MoodSelector';
 import { JournalCard } from '../../components/JournalCard';
-import { router,Href } from 'expo-router';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
-    const { user, userRole } = useAuth();
+    const { user, userRole, loading: authLoading } = useAuth();
     const [entries, setEntries] = useState<JournalEntry[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [editingEntry, setEditingEntry] = useState<JournalEntry | null>(null);
@@ -20,16 +20,16 @@ export default function HomeScreen() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (user) {
-            loadEntries();
-        }
-    }, [user]);
-
-    useEffect(() => {
-        if (!user) {
+        if (!authLoading && !user) {
             router.replace('/login');
         }
-    }, [user]);
+    }, [user, authLoading]);
+
+    useEffect(() => {
+        if (user && !authLoading) {
+            loadEntries();
+        }
+    }, [user, authLoading]);
 
     const loadEntries = async () => {
         if (!user) return;
@@ -110,15 +110,28 @@ export default function HomeScreen() {
 
     const moodStats = getMoodStats();
 
+    if (authLoading) {
+        return (
+            <LinearGradient colors={['#1A1A1A', '#2A2A2A']} className="flex-1 items-center justify-center">
+                <Text className="text-white text-xl">Loading...</Text>
+            </LinearGradient>
+        );
+    }
+
+    if (!user) {
+        return null; // Will redirect from useEffect
+    }
+
     return (
         <LinearGradient colors={['#1A1A1A', '#2A2A2A']} className="flex-1">
             <ScrollView className="flex-1 px-6 pt-12">
+                {/* ... rest of your existing JSX ... */}
                 <View className="flex-row justify-between items-center mb-6">
                     <View>
                         <Text className="text-white text-2xl font-bold">Hello, {user?.displayName}!</Text>
                         <Text className="text-gray-400">How are you feeling today?</Text>
                     </View>
-                    <TouchableOpacity onPress={() => router.push('/profile' as Href)}>
+                    <TouchableOpacity onPress={() => router.push('/profile')}>
                         <LinearGradient colors={['#6C8CFF', '#6CFFD2']} className="w-10 h-10 rounded-xl items-center justify-center">
                             <Ionicons name="person" size={20} color="white" />
                         </LinearGradient>
