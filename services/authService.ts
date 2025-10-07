@@ -22,6 +22,7 @@ export const authService = {
         return userCredential.user;
     },
 
+
     login: async (email: string, password: string) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         return userCredential.user;

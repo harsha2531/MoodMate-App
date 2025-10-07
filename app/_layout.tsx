@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import "../global.css"
 
 function RootLayoutNav() {
     const { loading } = useAuth();
