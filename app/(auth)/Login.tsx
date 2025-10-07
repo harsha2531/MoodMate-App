@@ -30,7 +30,7 @@ export default function Login() {
             <Button mode="contained" onPress={onLogin} loading={loading} style={{ marginTop: 16 }}>
                 Sign In
             </Button>
-            <Link href="/register" style={{ marginTop: 8, textAlign: "center" }}>
+            <Link href="/app/Register" style={{ marginTop: 8, textAlign: "center" }}>
                 Create account
             </Link>
         </View>
