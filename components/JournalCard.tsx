@@ -28,7 +28,7 @@ export const JournalCard: React.FC<JournalCardProps> = ({
         );
     };
 
-    const getMoodColor = (mood: string) => {
+    const getMoodColor = (mood: string): [string, string] => {
         switch (mood) {
             case '😊': return ['#FF9D6C', '#FF6B9D'];
             case '😢': return ['#6C8CFF', '#6CFFD2'];
@@ -58,7 +58,7 @@ export const JournalCard: React.FC<JournalCardProps> = ({
                                     entry.mood === '😡' ? 'Angry' : 'Calm'}
                         </Text>
                         <Text className="text-gray-400 text-sm">
-                            {entry.createdAt.toLocaleDateString()} • {entry.createdAt.toLocaleTimeString()}
+                            {entry.createdAt.toLocaleDateString()} • {entry.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </Text>
                     </View>
                 </View>
