@@ -6,7 +6,7 @@
 ---
 
 ## 🎥 Demo Video  
-👉 [Watch on YouTube](https://youtu.be/IMkmUKr_HmI?si=Pt7uAsBOF99RyeX9)  
+👉 [Watch the video](https://drive.google.com/file/d/1oz_idZd_iIHNhQs9CyY6tuPEsIphjWwK/view?usp=sharing)  
 
 ## 📱 Download APK  
 📦 [Download MoodMate APK](https://expo.dev/accounts/harsha2631/)  
