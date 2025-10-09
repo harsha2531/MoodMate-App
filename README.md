@@ -163,8 +163,6 @@ service cloud.firestore {
 |-------|------|----------|----------|
 | ![Login](assets/screens/login.png) | ![Home](assets/screens/home.png) | ![Journal](assets/screens/journal.png) | ![Profile](assets/screens/profile.png) |
 
-*(Add screenshots to `/assets/screens/` folder.)*
-
 ---
 
 ## 🤝 Contributing  
