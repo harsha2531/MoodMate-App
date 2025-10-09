@@ -29,7 +29,7 @@ export default function LoginScreen() {
             await authService.login(email, password);
             router.replace('/(tabs)' as Href);
         } catch (error: any) {
-            Alert.alert('Login Failed,Please check your credentials..!');
+            Alert.alert('Error :','Login Failed..! Please check your credentials');
         } finally {
             setLoading(false);
         }

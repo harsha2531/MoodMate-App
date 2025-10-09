@@ -41,7 +41,6 @@ export default function HomeScreen() {
             setEntries(userEntries);
         } catch (error: any) {
             console.error('Load entries error:', error);
-            // Show more specific error message
             if (error.message.includes('index required')) {
                 Alert.alert(
                     'Index Required',
